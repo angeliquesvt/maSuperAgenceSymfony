@@ -5,6 +5,12 @@ home:
 property:
     path: /biens
     controller: App\Controller\PropertyController::index
+
+showproperty:
+    path: /biens/{slug}-{id}
+    controller: App\Controller\PropertyController::show
+    requirements:
+         slug: '[a-z0-9\-]*'
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
