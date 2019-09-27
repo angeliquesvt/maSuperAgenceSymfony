@@ -39,6 +39,7 @@ class AdminPropertyController extends AbstractController {
       if($form->isSubmitted() && $form->isValid()) {
         $this->en->persist($property);
         $this->en->flush();
+        $this->addFlash('success', 'Bien créé avec succès');
         return $this->redirectToRoute('admin');
       }
 
@@ -61,6 +62,7 @@ class AdminPropertyController extends AbstractController {
 
         if($form->isSubmitted() && $form->isValid()) {
           $this->en->flush();
+          $this->addFlash('success', 'Bien modifié avec succès');
           return $this->redirectToRoute('admin');
         }
 
@@ -70,9 +72,12 @@ class AdminPropertyController extends AbstractController {
         ]);
     }
 
-    public function delete(Property $property) {
-      $this->en->remove($property);
-      $this->en->flush();
+    public function delete(Property $property, Request $request) {
+      if($this->isCsrfTokenValid('delete' . $property->getId(), $request->get("_token"))) {
+        $this->en->remove($property);
+        $this->en->flush();
+        $this->addFlash('success', 'Bien supprimé avec succès');
+      }
       return $this->redirectToRoute('admin');
     }
 }

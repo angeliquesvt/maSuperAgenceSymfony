@@ -1,0 +1,15 @@
+App\Entity\Property:
+    properties:
+        surface:
+            - Range:
+                min: 10
+                max: 200
+        postal_code:
+            - Regex:
+                pattern: '/^[0-9]{5}$/'
+        title:
+            - Length:
+                min: 5
+                max: 255
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity: title
